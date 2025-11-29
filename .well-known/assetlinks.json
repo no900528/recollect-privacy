@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "me.recollect.app",
+      "sha256_cert_fingerprints": [
+        "00:4D:89:76:D9:60:80:5D:2A:C2:8C:A6:69:F2:BF:73:DD:41:94:B5:EE:28:D5:2A:5F:EF:87:BB:48:E3:AB:81"
+      ]
+    }
+  }
+]
