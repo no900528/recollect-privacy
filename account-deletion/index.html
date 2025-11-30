@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>리콜렉트 - 계정 삭제</title>
+    <style>
+        :root {
+            --bg: #fafafa;
+            --text: #333;
+            --muted: #666;
+            --border: #e0e0e0;
+            --accent: #4a6fa5;
+            --warning-bg: #fff8e6;
+            --warning-border: #f5a623;
+            --warning-text: #8b6914;
+            --danger-bg: #ffebee;
+            --danger-text: #c62828;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 720px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+        }
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .lang-switch {
+            margin-top: 1rem;
+        }
+        .lang-switch button {
+            background: none;
+            border: 1px solid var(--border);
+            padding: 0.4rem 1rem;
+            margin: 0 0.25rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .lang-switch button.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+        }
+        .updated {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        section {
+            margin-bottom: 2rem;
+        }
+        h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--accent);
+        }
+        p, li {
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+        ul, ol {
+            padding-left: 1.5rem;
+        }
+        a {
+            color: var(--accent);
+        }
+        footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--muted);
+            font-size: 0.85rem;
+        }
+        footer a {
+            color: var(--muted);
+            margin: 0 0.5rem;
+        }
+        .content { display: none; }
+        .content.active { display: block; }
+        .warning {
+            background: var(--warning-bg);
+            border-left: 4px solid var(--warning-border);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .warning p {
+            margin: 0;
+            color: var(--warning-text);
+        }
+        .steps {
+            counter-reset: step;
+            list-style: none;
+            padding-left: 0;
+        }
+        .steps li {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        .step-number {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            background: var(--accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.85rem;
+            margin-right: 1rem;
+        }
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .data-table th,
+        .data-table td {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .data-table th {
+            color: var(--muted);
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        .badge-delete {
+            background: var(--danger-bg);
+            color: var(--danger-text);
+        }
+        .badge-retain {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+        .contact-box {
+            background: #f5f5f5;
+            border-radius: 8px;
+            padding: 1.25rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+        .contact-box a {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 id="title">계정 삭제</h1>
+            <p class="updated" id="updated">리콜렉트 계정 및 데이터 삭제 안내</p>
+            <div class="lang-switch">
+                <button id="btn-ko" class="active" onclick="setLang('ko')">한국어</button>
+                <button id="btn-en" onclick="setLang('en')">English</button>
+            </div>
+        </header>
+
+        <!-- 한국어 -->
+        <div id="content-ko" class="content active">
+            <section>
+                <h2>1. 앱에서 계정 삭제하기</h2>
+                <p>리콜렉트 앱 내에서 직접 계정을 삭제할 수 있습니다.</p>
+                <ol class="steps">
+                    <li>
+                        <span class="step-number">1</span>
+                        <span>리콜렉트 앱을 실행하고 로그인합니다.</span>
+                    </li>
+                    <li>
+                        <span class="step-number">2</span>
+                        <span><strong>프로필</strong> 탭으로 이동합니다.</span>
+                    </li>
+                    <li>
+                        <span class="step-number">3</span>
+                        <span><strong>설정</strong> (톱니바퀴 아이콘)을 탭합니다.</span>
+                    </li>
+                    <li>
+                        <span class="step-number">4</span>
+                        <span><strong>계정 삭제</strong>를 선택합니다.</span>
+                    </li>
+                    <li>
+                        <span class="step-number">5</span>
+                        <span>안내에 따라 삭제를 확인합니다.</span>
+                    </li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>2. 삭제되는 데이터</h2>
+                <p>계정 삭제 시 다음 데이터가 처리됩니다:</p>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>데이터 유형</th>
+                            <th>처리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>계정 정보 (이메일, 프로필)</td>
+                            <td><span class="badge badge-delete">즉시 삭제</span></td>
+                        </tr>
+                        <tr>
+                            <td>작성한 기록 및 글</td>
+                            <td><span class="badge badge-delete">즉시 삭제</span></td>
+                        </tr>
+                        <tr>
+                            <td>AI 분석 리포트</td>
+                            <td><span class="badge badge-delete">즉시 삭제</span></td>
+                        </tr>
+                        <tr>
+                            <td>업로드한 이미지</td>
+                            <td><span class="badge badge-delete">즉시 삭제</span></td>
+                        </tr>
+                        <tr>
+                            <td>구독 및 결제 기록</td>
+                            <td><span class="badge badge-retain">법령에 따라 보관*</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.9rem; color: var(--muted);">
+                    * 결제 기록은 전자상거래법에 따라 5년간 보관 후 삭제됩니다.
+                </p>
+            </section>
+
+            <section>
+                <h2>3. 이메일로 삭제 요청하기</h2>
+                <p>앱에 접근할 수 없는 경우, 이메일로 삭제를 요청할 수 있습니다.</p>
+                <div class="warning">
+                    <p>본인 확인을 위해 가입 시 사용한 이메일 주소로 요청해 주세요.</p>
+                </div>
+                <div class="contact-box">
+                    <p style="margin-bottom: 0.5rem; color: var(--muted);">삭제 요청 이메일</p>
+                    <a href="mailto:support@re-collect.me?subject=계정 삭제 요청">support@re-collect.me</a>
+                </div>
+                <p>이메일 제목에 <strong>"계정 삭제 요청"</strong>을 포함해 주시면 빠른 처리가 가능합니다. 요청 접수 후 영업일 기준 3일 이내에 처리됩니다.</p>
+            </section>
+
+            <section>
+                <h2>4. 유의사항</h2>
+                <ul>
+                    <li>계정 삭제는 <strong>취소할 수 없습니다</strong>.</li>
+                    <li>삭제된 데이터는 복구할 수 없습니다.</li>
+                    <li>활성 구독이 있는 경우, 먼저 구독을 해지해 주세요.</li>
+                    <li>그룹에 속해 있는 경우, 그룹에서 먼저 탈퇴해 주세요.</li>
+                </ul>
+            </section>
+        </div>
+
+        <!-- English -->
+        <div id="content-en" class="content">
+            <section>
+                <h2>1. Delete Account in App</h2>
+                <p>You can delete your account directly within the Recollect app.</p>
+                <ol class="steps">
+                    <li>
+                        <span class="step-number">1</span>
+                        <span>Open the Recollect app and log in.</span>
+                    </li>
+                    <li>
+                        <span class="step-number">2</span>
+                        <span>Go to the <strong>Profile</strong> tab.</span>
+                    </li>
+                    <li>
+                        <span class="step-number">3</span>
+                        <span>Tap <strong>Settings</strong> (gear icon).</span>
+                    </li>
+                    <li>
+                        <span class="step-number">4</span>
+                        <span>Select <strong>Delete Account</strong>.</span>
+                    </li>
+                    <li>
+                        <span class="step-number">5</span>
+                        <span>Follow the prompts to confirm deletion.</span>
+                    </li>
+                </ol>
+            </section>
+
+            <section>
+                <h2>2. Data That Will Be Deleted</h2>
+                <p>The following data will be processed when you delete your account:</p>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Data Type</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Account info (email, profile)</td>
+                            <td><span class="badge badge-delete">Deleted immediately</span></td>
+                        </tr>
+                        <tr>
+                            <td>Your writings and records</td>
+                            <td><span class="badge badge-delete">Deleted immediately</span></td>
+                        </tr>
+                        <tr>
+                            <td>AI analysis reports</td>
+                            <td><span class="badge badge-delete">Deleted immediately</span></td>
+                        </tr>
+                        <tr>
+                            <td>Uploaded images</td>
+                            <td><span class="badge badge-delete">Deleted immediately</span></td>
+                        </tr>
+                        <tr>
+                            <td>Subscription & payment records</td>
+                            <td><span class="badge badge-retain">Retained per law*</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.9rem; color: var(--muted);">
+                    * Payment records are retained for up to 5 years as required by applicable laws.
+                </p>
+            </section>
+
+            <section>
+                <h2>3. Request Deletion via Email</h2>
+                <p>If you cannot access the app, you can request deletion via email.</p>
+                <div class="warning">
+                    <p>Please send your request from the email address associated with your account.</p>
+                </div>
+                <div class="contact-box">
+                    <p style="margin-bottom: 0.5rem; color: var(--muted);">Deletion Request Email</p>
+                    <a href="mailto:support@re-collect.me?subject=Account Deletion Request">support@re-collect.me</a>
+                </div>
+                <p>Include <strong>"Account Deletion Request"</strong> in the subject line for faster processing. Requests are processed within 3 business days.</p>
+            </section>
+
+            <section>
+                <h2>4. Important Notes</h2>
+                <ul>
+                    <li>Account deletion <strong>cannot be undone</strong>.</li>
+                    <li>Deleted data cannot be recovered.</li>
+                    <li>If you have an active subscription, please cancel it first.</li>
+                    <li>If you belong to a group, please leave the group first.</li>
+                </ul>
+            </section>
+        </div>
+
+        <footer>
+            <p>&copy; 2024 Recollect. All rights reserved.</p>
+            <p style="margin-top: 0.5rem;">
+                <a href="https://re-collect.me">Home</a> ·
+                <a href="https://re-collect.me/privacy">Privacy Policy</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function setLang(lang) {
+            document.getElementById('content-ko').classList.remove('active');
+            document.getElementById('content-en').classList.remove('active');
+            document.getElementById('btn-ko').classList.remove('active');
+            document.getElementById('btn-en').classList.remove('active');
+
+            document.getElementById('content-' + lang).classList.add('active');
+            document.getElementById('btn-' + lang).classList.add('active');
+
+            if (lang === 'ko') {
+                document.getElementById('title').textContent = '계정 삭제';
+                document.getElementById('updated').textContent = '리콜렉트 계정 및 데이터 삭제 안내';
+                document.documentElement.lang = 'ko';
+            } else {
+                document.getElementById('title').textContent = 'Delete Account';
+                document.getElementById('updated').textContent = 'Recollect Account & Data Deletion Guide';
+                document.documentElement.lang = 'en';
+            }
+
+            const url = new URL(window.location);
+            url.searchParams.set('lang', lang);
+            window.history.replaceState({}, '', url);
+        }
+
+        const params = new URLSearchParams(window.location.search);
+        const lang = params.get('lang');
+        if (lang === 'en') setLang('en');
+    </script>
+</body>
+</html>
